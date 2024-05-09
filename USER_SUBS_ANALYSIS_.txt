@@ -1,0 +1,54 @@
+SELECT * FROM USER_SUBS;
+
+----Calcualte total revenue per month by replacing null with appropriate values----
+CREATE TABLE SALES_F AS
+SELECT *,
+FIRST_VALUE(Subscription_Amount) OVER (PARTITION BY user_id ORDER BY Date) AS Total_amount
+FROM USER_SUBS;
+
+--Display the New Table--
+SELECT * FROM SALES_F;
+
+--Adding a Month column in SALES_F Table--
+ALTER TABLE SALES_F ADD COLUMN Month INT;
+
+UPDATE SALES_F SET Month = CAST(SUBSTRING(Date, 1,2) AS INT);
+
+--Checking the changes in the table--
+SELECT * FROM SALES_F;
+
+
+SELECT SUM(Total_amount) AS Total_Sales,
+Month
+FROM SALES_F
+GROUP BY Month;
+
+----Calculate three month moving average----
+--Moving average is used for Stock Market bench marking--
+CREATE TABLE MOVING_F AS
+SELECT SUM(Total_amount) AS Total_Sales,
+Month
+FROM SALES_F
+GROUP BY Month;
+
+--Using Window Function--
+SELECT Month, Total_Sales, 
+AVG(Total_Sales) OVER (ORDER BY Month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS THREE_MOVING, 4
+FROM MOVING_F
+ORDER BY Month;
+
+--Drop Moving Table--
+DROP TABLE MOVING;
+
+----Which month has highest jump in sales compared to previous month----
+CREATE TABLE JUMP AS
+SELECT SUM(Total_amount) AS Total_Sales,
+Month
+FROM SALES_F
+GROUP BY Month;
+
+SELECT Month, Total_Sales,
+LAG(Total_Sales) OVER (ORDER BY Month) AS Previous_Sales,
+Total_Sales - (LAG(Total_Sales) OVER (ORDER BY Month)) AS Highest_Jump
+FROM JUMP
+ORDER BY Month;
