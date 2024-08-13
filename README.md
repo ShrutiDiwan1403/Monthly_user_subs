@@ -24,7 +24,6 @@ With the three-month moving average, one can analyze the churn rate or the perce
 -Month with the highest jump in sales compared to previous month.
 
 
-![subscription__model_image](https://github.com/user-attachments/assets/9218f189-1f6f-407b-8a01-65ca54f8a352)
 
 
 ![music_download_](https://github.com/user-attachments/assets/1e28d4d1-ec77-4d29-aadf-b962c6a9cc15)
