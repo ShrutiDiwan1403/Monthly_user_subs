@@ -19,14 +19,7 @@ Finally, calculating the sales jump can nurse with the Lifetime Value (LTV) of S
 **Tool**: SQLite
 
 
-**Performance Outcome**: 
-
-
-
-
-
--Month with the highest jump in sales compared to previous month.
-
+**Performance Outcome**: The insight gained from data does not rely on its size; it leans upon the quality of the data.
 
 
 
